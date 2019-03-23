@@ -1,2 +1,5 @@
 #!/bin/bash
 
+# Clone the GitHub repository for the Redis operator.
+
+git clone https://github.com/RedisLabs/redis-enterprise-k8s-docs.git
