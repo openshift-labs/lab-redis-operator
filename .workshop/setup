@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -x
+
+# Generate resource files from templates.
+
+oc process -f templates/clusterroles-session-rules.yaml \
+    --param JUPYTERHUB_NAMESPACE=${JUPYTERHUB_NAMESPACE} \
+    --param JUPYTERHUB_APPLICATION=${JUPYTERHUB_APPLICATION} \
+    -o yaml > resources/clusterroles-session-rules.yaml
+
+oc process -f templates/clusterroles-spawner-rules.yaml \
+    --param JUPYTERHUB_NAMESPACE=${JUPYTERHUB_NAMESPACE} \
+    --param JUPYTERHUB_APPLICATION=${JUPYTERHUB_APPLICATION} \
+    -o yaml > resources/clusterroles-spawner-rules.yaml
+
+oc process -f templates/configmap-extra-resources.yaml \
+    --param JUPYTERHUB_NAMESPACE=${JUPYTERHUB_NAMESPACE} \
+    --param JUPYTERHUB_APPLICATION=${JUPYTERHUB_APPLICATION} \
+    -o yaml > resources/configmap-extra-resources.yaml
