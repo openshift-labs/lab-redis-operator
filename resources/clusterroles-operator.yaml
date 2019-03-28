@@ -3,26 +3,14 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: redis-enterprise-operator
 rules:
-- apiGroups:
-  - ""
-  - extensions
-  - apps
-  - rbac.authorization.k8s.io
-  - policy"
-  resources:
-  - "*"
-  verbs:
-  - "*"
+- apiGroups: ["", "extensions", "apps", "rbac.authorization.k8s.io", "policy"]
+  resources: ["*"]
+  verbs: ["*"]
 - apiGroups:
   - app.redislabs.com
-  resources:
-    "*"
-  verbs:
-  - "*"
+  resources: ["*"]
+  verbs: ["*"]
 - apiGroups:
   - route.openshift.io
-  resources:
-  - routes
-  - "routes/custom-host"
-  verbs:
-  - "*"
+  resources: ["routes", "routes/custom-host"]
+  verbs: ["*"]
