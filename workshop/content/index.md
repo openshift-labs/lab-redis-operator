@@ -5,7 +5,7 @@ NextPage: exercises/01-operator-prerequisites
 ExitSign: Start Workshop
 ---
 
-The [Wikipedia](https://kafka.apache.org/) site describes Redis as an:
+The [Wikipedia](https://en.wikipedia.org/wiki/Redis) site describes Redis as an:
 
 > in-memory data structure project implementing a distributed, in-memory key-value database with optional durability. Redis supports different kinds of abstract data structures, such as strings, lists, maps, sets, sorted sets, hyperloglogs, bitmaps, streams and spatial indexes.
 
