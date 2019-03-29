@@ -1,5 +1,5 @@
 Lab - Redis Operator
-========================
+====================
 
 This workshop provides an introduction to deploying a Redis cluster using the Redis operator. Use of the operator is from the perspective of a developer.
 
