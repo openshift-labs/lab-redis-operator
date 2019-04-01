@@ -1,0 +1,24 @@
+apiVersion: "app.redislabs.com/v1alpha1"
+kind: "RedisEnterpriseCluster"
+metadata:
+  name: "redis-enterprise"
+spec:
+  nodes: 3
+  uiServiceType: LoadBalancer
+  username: "admin@acme.com"
+  redisEnterpriseNodeResources:
+    limits:
+      cpu: "1000m"
+      memory: 4Gi
+    requests:
+      cpu: "500m"
+      memory: 2Gi
+  redisEnterpriseImageSpec:
+    imagePullPolicy:  IfNotPresent
+    repository:       redislabs/redis
+    versionTag:       5.4.0-19.rhel7-openshift
+  redisEnterpriseServicesRiggerImageSpec:
+    imagePullPolicy:  IfNotPresent
+    repository:       redislabs/k8s-controller
+    versionTag:       109_5c9af60.rhel7
+
