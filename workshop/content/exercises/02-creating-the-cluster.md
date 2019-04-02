@@ -1,5 +1,5 @@
 ---
-Title: Creating the Cluster
+Title: Creating the Redis Cluster
 PrevPage: 01-operator-prerequisites
 NextPage: 03-creating-the-database
 ---
@@ -21,3 +21,5 @@ Wait for all four pods to be created, the "rigger" pod, and one pod for each rep
 ```execute-2
 <ctrl+c>
 ```
+
+Now you have a Redis cluster up and running! Next, we'll create a database.
