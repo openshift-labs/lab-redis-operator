@@ -11,7 +11,7 @@ var google_analytics = `
 `;
 
 var config = {
-    site_title: 'Using the Redis operator',
+    site_title: 'Using the Redis Enterprise operator',
 
     analytics: google_analytics,
 

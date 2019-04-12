@@ -1,20 +1,26 @@
 ---
 Title: Creating a Database
 PrevPage: 02-creating-the-cluster
-NextPage: 04-auto-recovery
+NextPage: 04-using-redis-in-an-app
 ---
 
-To create a database, we first need to get the password value from the "redis-enterprise" secret.
+### Retrieve the Password
 
-Click the Console tab above the terminal windows. In the left-hand navigation, click Workloads > Secrets. In the list of Secrets, find "redis-enterprise" and click on it. 
+To create a database, you first need to get the password value from the *"redis-enterprise"* secret.
+
+Click the *Console* tab above the terminal windows. In the left-hand navigation, click *Workloads > Secrets*. In the list of Secrets, find *redis-enterprise* and click it. 
 
 ![List of secrets](redis-enterprise-secret.png)
 
-Scroll down the page until you see the Data section. Click the copy to clipboard icon next to the password field. 
+Scroll down the page until you see the *Data* section. Click the *copy to clipboard* icon next to the password field. 
 
 ![Copy password](redis-copy-password.png)
 
-Switch back to the Terminal tab and run the following command to get a shell into the `redis-enterprise-0` pod:
+### Create the Database
+
+Redis Enterprise Software has a web interface that you can use for setting up databases. However in this lab, you will be using the command line instead.
+
+Switch back to the *Terminal* tab and run the following command to get a shell into the `redis-enterprise-0` pod:
 
 ```execute-1
 oc exec -it redis-enterprise-0 bash
@@ -32,6 +38,7 @@ curl -k -i -u "admin@acme.com:$PW" --request POST --url "https://localhost:9443/
 ```
 
 You should receive a response that looks something like this:
+
 ```
 HTTP/1.1 200 OK
 Server: nginx
@@ -52,7 +59,9 @@ cluster-state-id: 11
 }
 ```
 
-Confirm that it worked by running the following command to list the available services. 
+### Verify that the Database Service is Running
+
+Confirm that the database creation worked by running the following command to list the available services: 
 
 ```execute-2
 oc get services
@@ -66,28 +75,39 @@ sample-db             ClusterIP      172.30.161.16    <none>                    
 sample-db-headless    ClusterIP      None             <none>                          12000/TCP           2m
 ```
 
-Back in the top terminal window, execute the following replacing CLUSTER_IP with the IP address you just copied:
+### Use `redis-cli` to Set and Get a Value
 
+Back in the top terminal window, execute the following:
+
+```execute-1
+export REDIS_HOST=sample-db.%project_namespace%.svc.cluster.local
 ```
-export REDIS_IP=CLUSTER_IP
-```
+
+`sample-db.%project_namespace%.svc.cluster.local` is the hostname for the `sample-db` service. This hostname is only accessible within your OpenShift cluster, but that is sufficient for what you're doing in the lab.
 
 Then, use the `redis-cli` command to connect to your database and set and retrieve a value to confirm that it's working:
 
 ```execute-1
-redis-cli -h $REDIS_IP -p 12000 set a 1
+redis-cli -h $REDIS_HOST -p 12000 set a 1
 ```
 
 ```execute-1
-redis-cli -h $REDIS_IP -p 12000 get a
+redis-cli -h $REDIS_HOST -p 12000 get a
 ```
 
 Your output should look similar to this:
 
 ```
-bash-4.2$ redis-cli -h $REDIS_IP -p 12000 set a 1
+bash-4.2$ redis-cli -h $REDIS_HOST -p 12000 set a 1
 OK
-bash-4.2$ redis-cli -h $REDIS_IP -p 12000 get a
+bash-4.2$ redis-cli -h $REDIS_HOST -p 12000 get a
 "1"
 ```
+Now exit the shell session to get back to the original prompt.
+
+```execute-1
+exit
+```
+
+Now that you've confirmed that your database is working via the `redis-cli` tool, you'll try it with an application next.
 

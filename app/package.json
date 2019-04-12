@@ -1,0 +1,16 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "A simple Node.js application that connects to a Redis db",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Jan Kleinert",
+  "license": "ISC",
+  "dependencies": {
+    "prompt": "^1.0.0",
+    "redis": "^2.8.0"
+  }
+}

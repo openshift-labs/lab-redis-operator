@@ -51,7 +51,7 @@ Specifically, the status of the node that you deleted will change from `OK` to `
 oc get pods -l app=redis-enterprise --watch
 ```
 
-Once the `redis-enteprise-2` pod is running and ready again, then you should see the status in the top window go back to `OK`.
+Once the `redis-enterprise-2` pod is running and ready again, then you should see the status in the top window go back to `OK`.
 
 Now that you've completed this scenario, you should be familiar with:
 * How to create a Redis cluster using the Redis Enterprise operator

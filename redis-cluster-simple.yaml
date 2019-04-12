@@ -3,7 +3,7 @@ kind: "RedisEnterpriseCluster"
 metadata:
   name: "redis-enterprise"
 spec:
-  nodes: 3
+  nodes: 1
   uiServiceType: LoadBalancer
   username: "admin@acme.com"
   redisEnterpriseNodeResources:
