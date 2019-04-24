@@ -9,7 +9,7 @@ fail()
 WORKSHOP_IMAGE="quay.io/openshiftlabs/lab-redis-operator:latest"
 
 TEMPLATE_REPO=https://raw.githubusercontent.com/openshift-labs/workshop-spawner
-TEMPLATE_VERSION=3.0.3
+TEMPLATE_VERSION=3.0.5
 TEMPLATE_FILE=learning-portal-production.json
 TEMPLATE_PATH=$TEMPLATE_REPO/$TEMPLATE_VERSION/templates/$TEMPLATE_FILE
 
@@ -50,7 +50,7 @@ echo
 echo "### Install global operator definitions."
 echo
 
-oc apply -f resources/ --recursive
+oc apply -f .workshop/resources/ --recursive
 
 if [ "$?" != "0" ]; then
     fail "Error: Failed to create global operator definitions."
@@ -61,13 +61,13 @@ echo
 echo "### Update spawner configuration for workshop."
 echo
 
-oc process -f templates/clusterroles-session-rules.yaml \
+oc process -f .workshop/templates/clusterroles-session-rules.yaml \
     --param JUPYTERHUB_APPLICATION="$JUPYTERHUB_APPLICATION" \
     --param JUPYTERHUB_NAMESPACE="$JUPYTERHUB_NAMESPACE" | oc apply -f - && \
-oc process -f templates/clusterroles-spawner-rules.yaml \
+oc process -f .workshop/templates/clusterroles-spawner-rules.yaml \
     --param JUPYTERHUB_APPLICATION="$JUPYTERHUB_APPLICATION" \
     --param JUPYTERHUB_NAMESPACE="$JUPYTERHUB_NAMESPACE" | oc apply -f - && \
-oc process -f templates/configmap-extra-resources.yaml \
+oc process -f .workshop/templates/configmap-extra-resources.yaml \
     --param JUPYTERHUB_APPLICATION="$JUPYTERHUB_APPLICATION" \
     --param JUPYTERHUB_NAMESPACE="$JUPYTERHUB_NAMESPACE" | oc apply -f -
 

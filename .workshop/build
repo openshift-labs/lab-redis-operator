@@ -3,3 +3,8 @@
 # Clone the GitHub repository for the Redis operator.
 
 git clone https://github.com/RedisLabs/redis-enterprise-k8s-docs.git
+
+mv workshop /opt/app-root/workshop
+
+# Delete all non required files from the image
+rm -rf Dockerfile README.md LICENSE

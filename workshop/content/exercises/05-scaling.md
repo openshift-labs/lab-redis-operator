@@ -8,7 +8,7 @@ NextPage: ../finish
 
 The Redis Enterprise operator makes it easy to scale up your Redis Enterprise cluster if needed.
 
-You may recall that earlier in the lab, you saw that in the spec for the `RedisEnterpriseCluster` object definition, the number of nodes was set to 1. Here's a snippet of the `redis-cluster-simple.yaml` file:
+You may recall that earlier in the lab, you saw that in the spec for the `RedisEnterpriseCluster` object definition, the number of nodes was set to 1. Here's a snippet of the definition:
 
 ```
 apiVersion: "app.redislabs.com/v1alpha1"
@@ -22,26 +22,18 @@ spec:
 
 ### Scale Up the Redis Enterprise Cluster
 
-To scale your Redis Enterprise cluster from 1 to 3 nodes, all you need to do is update the number of nodes in the spec. 
+To scale your Redis Enterprise cluster from 1 to 3 nodes, all you need to do is update the number of nodes in the spec.
 
 First, execute a watch in the lower terminal, so you can see what happens after you apply the change:
 
 ```execute-2
-oc get pods -l app=redis-enterprise --watch
+watch oc get pods -l app=redis-enterprise
 ```
 
-Next, we'll edit the redis-cluster-simple.yaml file:
+Next, we'll change the size of our Redis cluster:
 
 ```execute-1
-nano ~/redis-cluster-simple.yaml
-```
-
-Change `nodes: 1` to `nodes: 3` and then press *^O* to save, *return* to accept the existing file name, and *^X* to exit.
-
-Apply the changes:
-
-```execute-1
-oc apply -f ~/redis-cluster-simple.yaml
+oc get RedisEnterpriseCluster/redis-enterprise -o yaml |sed -e 's/nodes: 1/nodes: 3/' | oc apply -f -
 ```
 
 In the bottom terminal, you should see additional pods start to be created for the new nodes in your Redis Enterprise cluster.
@@ -55,5 +47,3 @@ Now that you've completed this lab, you should be familiar with:
 * The basics of how the Redis Enterprise operator handles scaling in a Redis Enterprise cluster
 
 Continue to the next page for more resources on OpenShift, Operators, and Redis.
-
-

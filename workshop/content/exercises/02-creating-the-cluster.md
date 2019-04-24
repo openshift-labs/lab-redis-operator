@@ -8,7 +8,7 @@ NextPage: 03-creating-the-database
 Set up a watch of pods created for the Redis Enterprise cluster:
 
 ```execute-2
-oc get pods -l app=redis-enterprise --watch
+watch oc get pods -l app=redis-enterprise
 ```
 
 Create the Redis Enterprise cluster:
