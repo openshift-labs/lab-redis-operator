@@ -8,7 +8,7 @@ NextPage: 02-creating-the-cluster
 
 The Redis Enterprise operator is installed into a project to monitor requests to create a Redis Enterprise Software cluster. The operator can only be deployed and set up by a cluster admin of the Redis cluster.
 
-In this lab environment, the Redis Enterprise operator has been pre-installed into your project ready for use. The user you are running the workshop as, has also been delegated the appropriate roles to allow it to create a Redis Enterprise cluster.
+In this lab environment, the Redis Enterprise operator has been pre-installed into your project ready for use. The user you are running the workshop as has also been delegated the appropriate roles to allow it to create a Redis Enterprise cluster.
 
 
 ### Verify Role Access to Create the Cluster
