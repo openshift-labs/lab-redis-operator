@@ -29,7 +29,7 @@ var setSchema = {
         pattern: /^[a-zA-Z\-\s]+$/,
         message: 'Valid animals can only contain alpha characters, "-" and spaces.',
         required: true,
-        description: 'Enter animal type'  
+        description: 'Enter animal type'
       }
     }
   };
@@ -44,10 +44,10 @@ var setSchema = {
       }
     }
   };
- 
+
   prompt.start();
   startPrompt();
-    
+
   function startPrompt () {
     prompt.message = colors.magenta("Pet Names");
     prompt.delimiter = colors.green("><");
@@ -56,13 +56,13 @@ var setSchema = {
         if (err) {
             console.log(colors.red("Oops! Something went wrong. "+ err));
         } else {
-            if (result.action === "set") {
+            if (result.action.trim() === "set") {
                 prompt.get(setSchema, function (err, result) {
                     client.set(result.name, result.animal);
                     console.log(colors.cyan("You entered: " + result.name + ": " + result.animal));
                     startPrompt();
                 });
-            } else if (result.action === "get"){
+            } else if (result.action.trim() === "get"){
                 prompt.get(getSchema, function(err, result) {
                     client.get(result.name, function(err, reply) {
                         if (reply === null) {
@@ -76,7 +76,7 @@ var setSchema = {
                 });
             } else {
                 process.exit();
-            }    
+            }
         }
   });
 }
@@ -84,7 +84,3 @@ var setSchema = {
 client.on('error', function(err) {
     console.log('Something went wrong ' + err);
 });
-
-
-
-
