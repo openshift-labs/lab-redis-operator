@@ -1,22 +1,8 @@
 #!/bin/bash
 
-set -x
-
-# Generate resource files from templates.
-# 
-# mkdir resources
-# 
-# oc process -f .workshop/templates/clusterroles-session-rules.yaml \
-#     --param JUPYTERHUB_NAMESPACE=${JUPYTERHUB_NAMESPACE} \
-#     --param JUPYTERHUB_APPLICATION=${JUPYTERHUB_APPLICATION} \
-#     -o yaml > resources/clusterroles-session-rules.yaml
-# 
-# oc process -f .workshop/templates/clusterroles-spawner-rules.yaml \
-#     --param JUPYTERHUB_NAMESPACE=${JUPYTERHUB_NAMESPACE} \
-#     --param JUPYTERHUB_APPLICATION=${JUPYTERHUB_APPLICATION} \
-#     -o yaml > resources/clusterroles-spawner-rules.yaml
-# 
-# oc process -f .workshop/templates/configmap-extra-resources.yaml \
-#     --param JUPYTERHUB_NAMESPACE=${JUPYTERHUB_NAMESPACE} \
-#     --param JUPYTERHUB_APPLICATION=${JUPYTERHUB_APPLICATION} \
-#     -o yaml > resources/configmap-extra-resources.yaml
+# This 'setup' script is where you can add steps that should be run each
+# time the container for the workshop is started. Note that if you are
+# using persistent storage with a workshop and make changes to files from
+# this script, or are deploying applications, your scripts must cope with
+# the steps having already been run. This is because this script will be
+# run a second time if the container were restarted for some reason.

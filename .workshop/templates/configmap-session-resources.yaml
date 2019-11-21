@@ -1,0 +1,96 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  name: configmap-session-resources
+parameters:
+- name: NAME_PREFIX
+  value: ""
+  required: false
+- name: WORKSHOP_NAME
+  value: ""
+  required: true
+- name: SPAWNER_NAMESPACE
+  value: ""
+  required: true
+- name: SPAWNER_MODE
+  value: "learning-portal"
+  required: true
+objects:
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: ${NAME_PREFIX}${WORKSHOP_NAME}-session-resources
+    labels:
+      app: ${NAME_PREFIX}${WORKSHOP_NAME}
+      spawner: ${SPAWNER_MODE}
+      class: spawner
+  data:
+    extra_resources.yaml: |-
+      kind: List
+      apiVersion: v1
+      items:
+      - kind: SecurityContextConstraints
+        apiVersion: security.openshift.io/v1
+        metadata:
+          name: "${project_namespace}-redis"
+          labels:
+            app: ${NAME_PREFIX}${WORKSHOP_NAME}
+            spawner: ${SPAWNER_MODE}
+            class: spawner
+        priority: 888
+        allowedCapabilities:
+        - SYS_RESOURCE
+        seLinuxContext:
+          type: RunAsAny
+        runAsUser:
+          type: RunAsAny
+        users:
+        - system:serviceaccount:${project_namespace}:redis-enterprise-operator
+        - system:serviceaccount:${project_namespace}:redis-enterprise
+      - kind: ServiceAccount
+        apiVersion: v1
+        metadata:
+          name: redis-enterprise
+      - kind: ServiceAccount
+        apiVersion: v1
+        metadata:
+          name: redis-enterprise-operator
+      - kind: RoleBinding
+        apiVersion: rbac.authorization.k8s.io/v1
+        metadata:
+          name: redis-enterprise-operator
+        subjects:
+        - kind: ServiceAccount
+          name: redis-enterprise-operator
+          namespace: "${project_namespace}"
+        roleRef:
+          kind: ClusterRole
+          apiGroup: rbac.authorization.k8s.io
+          name: redis-enterprise-operator
+      - apiVersion: apps/v1beta1
+        kind: Deployment
+        metadata:
+          name: redis-enterprise-operator
+        spec:
+          replicas: 1
+          selector:
+            matchLabels:
+              name: redis-enterprise-operator
+          template:
+            metadata:
+              labels:
+                name: redis-enterprise-operator
+            spec:
+              serviceAccount: redis-enterprise-operator
+              containers:
+              - name: redis-enterprise-operator
+                image: redislabs/operator:498_f987b08.rhel7
+                command:
+                - redis-enterprise-operator
+                imagePullPolicy: Always
+                env:
+                - name: WATCH_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+
